@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./client  # Adjust this if your React app is in a different folder
+    ports:
+      - "5713:80"
+    networks:
+      - my-network
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server  # Adjust this if your Node.js app is in a different folder
+    ports:
+      - "3500:3000"
+    networks:
+      - my-network
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: demouser
+      MYSQL_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_database
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
