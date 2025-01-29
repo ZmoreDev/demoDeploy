@@ -14,7 +14,7 @@ COPY . ./
 RUN npm install --save-dev nodemon
 
 # Expose port 3000
-EXPOSE 3000
+EXPOSE 3500
 
 # Run the server with nodemon
-CMD ["npx", "nodemon", "server.js"]
+CMD ["npx", "nodemon", "index.js"]

@@ -4,26 +4,18 @@ services:
   client:
     build:
       context: ./client  # Adjust this if your React app is in a different folder
+    # environment:
+    #   DB_HOST: db
     ports:
-      - "5713:80"
+      - "80:80"
     networks:
       - my-network
     depends_on:
       - server
 
-  server:
-    build:
-      context: ./server  # Adjust this if your Node.js app is in a different folder
-    ports:
-      - "3500:3000"
-    networks:
-      - my-network
-    volumes:
-      - ./server:/app
-      - /app/node_modules
 
   db:
-    image: mysql:8
+    image: mariadb:10
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_USER: demouser
@@ -32,7 +24,41 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "3306:3306"
+      - "3307:3306"
+    networks:
+      - my-network
+
+
+  server:
+    build:
+      context: ./server  # Adjust this if your Node.js app is in a different folder
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: demouser
+      DB_PASSWORD: rootpassword
+      DB_NAME: my_database
+    depends_on:
+      - db
+    ports:
+      - "3500:3500"
+    networks:
+      - my-network
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    # volumes:
+    # - ./apache.conf:/etc/apache2/conf-available/servername.conf
+    # command: >
+    #   /bin/sh -c "a2enconf servername && apache2-foreground"
+    environment:
+      - PMA_ARBITRARY=1
     networks:
       - my-network
 
