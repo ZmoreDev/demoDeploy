@@ -8,9 +8,11 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const location = window.location.hostname;
+
   const getItem = async () =>{
       try {
-        const response = await axios.get('http://localhost:3500/items');
+        const response = await axios.get(`http://${location}:3500/items`);
         setDataItem(response.data);
       } catch (error) {
         console.error(error);
