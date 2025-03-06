@@ -9,6 +9,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
 
   const location = window.location.hostname;
+  // const VITE_API=import.meta.env.VITE_API;
 
   const getItem = async () =>{
       try {
