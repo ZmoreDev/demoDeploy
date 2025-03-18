@@ -27,8 +27,14 @@ function App() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
+      
       const data = await response.json();
-      setData(data);
+
+      if (data) {
+        setData(data);
+      }
+    
+      
     } catch (err: unknown) {
       // Cast 'err' as an Error object
       if (err instanceof Error) {
