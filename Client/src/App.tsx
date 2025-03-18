@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css'
 
 function App() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] =  useState([]);
   // const [dataItem, setDataItem] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
