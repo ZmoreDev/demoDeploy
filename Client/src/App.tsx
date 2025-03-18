@@ -4,22 +4,22 @@ import './App.css'
 
 function App() {
   const [data, setData] =  useState([]);
-  // const [dataItem, setDataItem] = useState<any>(null);
+  const [dataItem, setDataItem] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const location = window.location.hostname;
   // const VITE_API=import.meta.env.VITE_API;
 
-  // const getItem = async () =>{
-  //     try {
-  //       const response = await axios.get(`http://${location}:3500/items`);
-  //       setDataItem(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
+  const getItem = async () =>{
+      try {
+        const response = await axios.get(`http://${location}:3500/items`);
+        setDataItem(response.data);
+      } catch (error) {
+        console.error(error);
+      }
     
-  // }
+  }
 
   const fetchData = async () => {
     try {
@@ -49,7 +49,7 @@ function App() {
 
 
    useEffect(() => {
-    // getItem();
+    getItem();
     fetchData();
   }, []);
 
@@ -59,14 +59,14 @@ function App() {
   return (
     <>
 
-      {/* <div>
+      <div>
         <h1>Database</h1>
         <ul>
           {dataItem.map((item: { id: number; name: string }) => (
             <li key={item.id}>{item.name}</li>
           ))}
         </ul>
-      </div> */}
+      </div>
      
 
       <div>
